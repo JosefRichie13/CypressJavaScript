@@ -18,7 +18,9 @@ class selectors {
     static ContinueButton = "#continue"
     static FinishButton = "#finish"
     static CheckoutBanner = ".complete-header"
-    
+    static Backpack = "#add-to-cart-sauce-labs-backpack"
+    static Onesie = "#add-to-cart-sauce-labs-onesie"
+
 }
 
 module.exports = selectors

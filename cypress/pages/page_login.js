@@ -9,7 +9,8 @@ class loginpage {
     }
 
     // This method logs in a user using 2 params, username and password.
-    // The cy.intercept is for an issue with the Website under test
+    // The cy.intercept is for an issue with the Website under test, 
+    // https://github.com/cypress-io/cypress/issues/27501
     login(username, password){
 
         cy.visit(configs.MainURL)
