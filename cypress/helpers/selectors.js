@@ -20,6 +20,8 @@ class selectors {
     static CheckoutBanner = ".complete-header"
     static Backpack = "#add-to-cart-sauce-labs-backpack"
     static Onesie = "#add-to-cart-sauce-labs-onesie"
+    static TotalPrice = ".summary_subtotal_label"
+    static FinalPrice = ".summary_info_label.summary_total_label"
 
 }
 
