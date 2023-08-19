@@ -12,14 +12,14 @@ const configs = require('../helpers/configs.js')
 
 describe('Product Checkout', () => {
 
-    // it('I can buy a product and checkout', () => {
-    //     loginpage.login(configs.ValidUser, configs.Password)
-    //     cy.get(selectors.Backpack).click()
-    //     cy.get(selectors.Onesie).click()
-    //     checkoutpage.FillDetailsToContinue()
-    //     cy.get(selectors.FinishButton).click()
-    //     cy.get(selectors.CheckoutBanner).should('have.text', 'Thank you for your order!')
-    // })
+    it('I can buy a product and checkout', () => {
+        loginpage.login(configs.ValidUser, configs.Password)
+        cy.get(selectors.Backpack).click()
+        cy.get(selectors.Onesie).click()
+        checkoutpage.FillDetailsToContinue()
+        cy.get(selectors.FinishButton).click()
+        cy.get(selectors.CheckoutBanner).should('have.text', 'Thank you for your order!')
+    })
 
     it('Tax is calculated at 8%', () => {
 
