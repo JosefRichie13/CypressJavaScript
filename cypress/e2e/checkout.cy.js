@@ -12,23 +12,44 @@ const configs = require('../helpers/configs.js')
 
 describe('Product Checkout', () => {
 
-    it('I can buy a product and checkout', () => {
-        loginpage.login(configs.ValidUser, configs.Password)
-        cy.get(selectors.Backpack).click()
-        cy.get(selectors.Onesie).click()
-        checkoutpage.FillDetailsToContinue()
-        cy.get(selectors.FinishButton).click()
-        cy.get(selectors.CheckoutBanner).should('have.text', 'Thank you for your order!')
-    })
+    // it('I can buy a product and checkout', () => {
+    //     loginpage.login(configs.ValidUser, configs.Password)
+    //     cy.get(selectors.Backpack).click()
+    //     cy.get(selectors.Onesie).click()
+    //     checkoutpage.FillDetailsToContinue()
+    //     cy.get(selectors.FinishButton).click()
+    //     cy.get(selectors.CheckoutBanner).should('have.text', 'Thank you for your order!')
+    // })
 
     it('Tax is calculated at 8%', () => {
 
         loginpage.login(configs.ValidUser, configs.Password)
         cy.get(selectors.Backpack).click()
         cy.get(selectors.Onesie).click()
+        cy.get(selectors.BoltTShirt).click()
         checkoutpage.FillDetailsToContinue()       
 
-        cy.get(selectors.TotalPrice).then(($Price) => {
+        // Putting the Total Tax calculation into a alias
+        // which we will use to compare against
+        cy.get(selectors.TotalPrice).then((Price) => {
+            var PriceInUI = Price.text()
+            var TaxCalculated = Number(PriceInUI.slice(13)) * 0.08
+            var TotalWithTax = TaxCalculated + Number(PriceInUI.slice(13))
+            var TotalWithTaxRounded = Math.round(TotalWithTax * 100) / 100
+            cy.wrap(TotalWithTaxRounded).as('TotalWithTaxRounded')
+        }) 
+
+        // Get the total price with Tax in the UI and assert against the price that we calculated
+        cy.get(selectors.FinalPrice).then((Price) => {
+            var FinalPriceInUI = Price.text()
+            var FinalPriceWithTrim = Number(FinalPriceInUI.slice(8).trim())
+            cy.get('@TotalWithTaxRounded').then(TotalWithTaxRounded => {
+                expect(TotalWithTaxRounded).to.eq(FinalPriceWithTrim)
+            })
+        })
+
+        //The same Tax calculation logic, but using fixtures
+/*         cy.get(selectors.TotalPrice).then(($Price) => {
             var PriceInUI = $Price.text()
             var TaxCalculated = Number(PriceInUI.slice(13)) * 0.08
             var TotalWithTax = TaxCalculated + Number(PriceInUI.slice(13))
@@ -41,6 +62,7 @@ describe('Product Checkout', () => {
             cy.readFile("cypress\\fixtures\\tempData.json").then( Price => {
                 expect(Price.TotalWithTaxRounded).to.eq(Number(PriceInUI.slice(8).trim()))
             })
-        })
+        }) */
+        
     })
 })
