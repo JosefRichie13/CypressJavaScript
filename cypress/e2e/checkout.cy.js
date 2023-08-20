@@ -65,4 +65,26 @@ describe('Product Checkout', () => {
         }) */
         
     })
+
+
+    it('Sum of individual items is equal to the total sum', () => {
+
+        loginpage.login(configs.ValidUser, configs.Password)
+        cy.get(selectors.Backpack).click()
+        cy.get(selectors.Onesie).click()
+        cy.get(selectors.BoltTShirt).click()
+        checkoutpage.FillDetailsToContinue() 
+
+        // Gets each price to sum it and put it in TotalCalculatedPrice variable
+        // Then asserts that the summed price in TotalCalculatedPrice is
+        // equal to the total sum displayed 
+        var TotalCalculatedPrice = 0
+        cy.get(selectors.IndividualPrices).each((Price) => {
+            TotalCalculatedPrice = TotalCalculatedPrice + parseFloat(Price.text().slice(1))
+
+            cy.get(selectors.TotalPrice).then((TotalPrice) => {
+                expect(TotalCalculatedPrice).to.eq(parseFloat(TotalPrice.text().slice(13)))
+            })
+        })
+    })
 })

@@ -23,6 +23,7 @@ class selectors {
     static BoltTShirt = "#add-to-cart-sauce-labs-bolt-t-shirt"
     static TotalPrice = ".summary_subtotal_label"
     static FinalPrice = ".summary_info_label.summary_total_label"
+    static IndividualPrices = ".inventory_item_price"
 
 }
 
