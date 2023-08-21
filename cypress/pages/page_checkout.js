@@ -8,6 +8,20 @@ class checkoutpage {
     constructor(){
     }
 
+    // This method adds a product to the cart.
+    // It gets the list of product names, then uses the Cypress each command, 
+    // Each accepts 2 variables, Product and index
+    // The IF condition checks for the name of the Product then
+    // clicks on the Add To Cart button of the index returned
+    AddAProductToCart(ProductName){
+
+        cy.get(selectors.ProductList).each((Product, index) => {
+            if(Product.text() === ProductName){
+                cy.get(selectors.AddToCartNew).eq(index).click()
+            }
+        })
+    }
+
     // This method clicks on the cart, checksout and fills the customer details to continue
     FillDetailsToContinue(){
 

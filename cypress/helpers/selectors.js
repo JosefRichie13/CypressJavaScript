@@ -25,6 +25,7 @@ class selectors {
     static FinalPrice = ".summary_info_label.summary_total_label"
     static IndividualPrices = ".inventory_item_price"
     static SortOption = ".product_sort_container"
+    static AddToCartNew = "button[data-test]"
 
 }
 

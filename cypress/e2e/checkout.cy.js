@@ -14,8 +14,14 @@ describe('Product Checkout', () => {
 
     it('I can buy a product and checkout', () => {
         loginpage.login(configs.ValidUser, configs.Password)
-        cy.get(selectors.Backpack).click()
-        cy.get(selectors.Onesie).click()
+
+        checkoutpage.AddAProductToCart('Sauce Labs Onesie')
+        checkoutpage.AddAProductToCart('Sauce Labs Bike Light')
+        checkoutpage.AddAProductToCart('Sauce Labs Bolt T-Shirt')
+        checkoutpage.AddAProductToCart('Sauce Labs Fleece Jacket')
+        checkoutpage.AddAProductToCart('Sauce Labs Backpack')
+        checkoutpage.AddAProductToCart('Test.allTheThings() T-Shirt (Red)')
+        
         checkoutpage.FillDetailsToContinue()
         cy.get(selectors.FinishButton).click()
         cy.get(selectors.CheckoutBanner).should('have.text', 'Thank you for your order!')
@@ -24,9 +30,10 @@ describe('Product Checkout', () => {
     it('Tax is calculated at 8%', () => {
 
         loginpage.login(configs.ValidUser, configs.Password)
-        cy.get(selectors.Backpack).click()
-        cy.get(selectors.Onesie).click()
-        cy.get(selectors.BoltTShirt).click()
+        checkoutpage.AddAProductToCart('Sauce Labs Fleece Jacket')
+        checkoutpage.AddAProductToCart('Sauce Labs Backpack')
+        checkoutpage.AddAProductToCart('Test.allTheThings() T-Shirt (Red)')
+        checkoutpage.AddAProductToCart('Sauce Labs Bike Light')
         checkoutpage.FillDetailsToContinue()       
 
         // Putting the Total Tax calculation into a alias
@@ -70,9 +77,10 @@ describe('Product Checkout', () => {
     it('Sum of individual items is equal to the total sum', () => {
 
         loginpage.login(configs.ValidUser, configs.Password)
-        cy.get(selectors.Backpack).click()
-        cy.get(selectors.Onesie).click()
-        cy.get(selectors.BoltTShirt).click()
+        checkoutpage.AddAProductToCart('Sauce Labs Onesie')
+        checkoutpage.AddAProductToCart('Sauce Labs Bike Light')
+        checkoutpage.AddAProductToCart('Sauce Labs Bolt T-Shirt')
+        checkoutpage.AddAProductToCart('Sauce Labs Fleece Jacket')
         checkoutpage.FillDetailsToContinue() 
 
         // Gets each price to sum it and put it in TotalCalculatedPrice variable
@@ -148,5 +156,5 @@ describe('Product Checkout', () => {
             })
         })
     })
-    
+
 })
