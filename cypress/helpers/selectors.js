@@ -26,6 +26,7 @@ class selectors {
     static IndividualPrices = ".inventory_item_price"
     static SortOption = ".product_sort_container"
     static AddToCartNew = "button[data-test]"
+    static CartBubbleNumber = ".shopping_cart_badge"
 
 }
 

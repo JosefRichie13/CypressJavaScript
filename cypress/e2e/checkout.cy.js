@@ -157,4 +157,50 @@ describe('Product Checkout', () => {
         })
     })
 
+
+    // Adds a number of items to the cart, then gets the cart number into a variable, NumberBefore
+    // Removes 1 item from the cart, then gets the cart number into a variable, NumberAfter
+    // Finally, subtracts 1 from NumberBefore and asserts if NumberBefore and NumberBefore are same
+    it('Cart count bubble decreases when product is removed', () => {
+
+        loginpage.login(configs.ValidUser, configs.Password)
+
+        checkoutpage.AddAProductToCart('Sauce Labs Onesie')
+        checkoutpage.AddAProductToCart('Sauce Labs Bike Light')
+        checkoutpage.AddAProductToCart('Sauce Labs Bolt T-Shirt')
+        checkoutpage.AddAProductToCart('Sauce Labs Fleece Jacket')
+        checkoutpage.AddAProductToCart('Sauce Labs Backpack')
+        checkoutpage.AddAProductToCart('Test.allTheThings() T-Shirt (Red)')
+
+        cy.get(selectors.CartBubbleNumber).then((NumberBefore) => {
+            var NumberBefore = parseInt(NumberBefore.text())
+            checkoutpage.AddAProductToCart('Sauce Labs Onesie')
+            cy.get(selectors.CartBubbleNumber).then((NumberAfter) => {
+                expect(NumberBefore - 1).to.eq(parseInt(NumberAfter.text()))
+            })
+        })
+    })
+
+
+    // Adds a number of items to the cart, then gets the cart number into a variable, NumberBefore
+    // Adds 1 item from the cart, then gets the cart number into a variable, NumberAfter
+    // Finally, adds 1 from NumberBefore and asserts if NumberBefore and NumberBefore are same
+    it('Cart count bubble increases when product is added', () => {
+
+        loginpage.login(configs.ValidUser, configs.Password)
+
+        checkoutpage.AddAProductToCart('Sauce Labs Bike Light')
+        checkoutpage.AddAProductToCart('Sauce Labs Bolt T-Shirt')
+        checkoutpage.AddAProductToCart('Sauce Labs Fleece Jacket')
+        checkoutpage.AddAProductToCart('Sauce Labs Backpack')
+        checkoutpage.AddAProductToCart('Test.allTheThings() T-Shirt (Red)')
+
+        cy.get(selectors.CartBubbleNumber).then((NumberBefore) => {
+            var NumberBefore = parseInt(NumberBefore.text())
+            checkoutpage.AddAProductToCart('Sauce Labs Onesie')
+            cy.get(selectors.CartBubbleNumber).then((NumberAfter) => {
+                expect(NumberBefore + 1).to.eq(parseInt(NumberAfter.text()))
+            })
+        })
+    })
 })
