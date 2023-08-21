@@ -49,20 +49,20 @@ describe('Product Checkout', () => {
         })
 
         //The same Tax calculation logic, but using fixtures
-/*         cy.get(selectors.TotalPrice).then(($Price) => {
-            var PriceInUI = $Price.text()
-            var TaxCalculated = Number(PriceInUI.slice(13)) * 0.08
-            var TotalWithTax = TaxCalculated + Number(PriceInUI.slice(13))
-            var TotalWithTaxRounded = Math.round(TotalWithTax * 100) / 100
-            cy.writeFile("cypress\\fixtures\\tempData.json", {TotalWithTaxRounded})
-        }) 
+        //  cy.get(selectors.TotalPrice).then(($Price) => {
+        //     var PriceInUI = $Price.text()
+        //     var TaxCalculated = Number(PriceInUI.slice(13)) * 0.08
+        //     var TotalWithTax = TaxCalculated + Number(PriceInUI.slice(13))
+        //     var TotalWithTaxRounded = Math.round(TotalWithTax * 100) / 100
+        //     cy.writeFile("cypress\\fixtures\\tempData.json", {TotalWithTaxRounded})
+        // }) 
 
-        cy.get(selectors.FinalPrice).then(($Price) => {
-            var PriceInUI = $Price.text()
-            cy.readFile("cypress\\fixtures\\tempData.json").then( Price => {
-                expect(Price.TotalWithTaxRounded).to.eq(Number(PriceInUI.slice(8).trim()))
-            })
-        }) */
+        // cy.get(selectors.FinalPrice).then(($Price) => {
+        //     var PriceInUI = $Price.text()
+        //     cy.readFile("cypress\\fixtures\\tempData.json").then( Price => {
+        //         expect(Price.TotalWithTaxRounded).to.eq(Number(PriceInUI.slice(8).trim()))
+        //     })
+        // })
         
     })
 
@@ -87,4 +87,66 @@ describe('Product Checkout', () => {
             })
         })
     })
+
+
+    // Logic here is to put all the prices/names into a list, RawPricesBeforeSort/RawNamesBeforeSort
+    // Then click on the sorter. which will sort the UI
+    // Then put all the sorted prices/names into a new list, RawPricesAfterSort/RawNamesAfterSort
+    // Then apply JavaScript sort methods on the original list, RawPricesBeforeSort/RawNamesBeforeSort
+    // Finally compare if RawPricesBeforeSort/RawNamesBeforeSort is equal to RawPricesBeforeSort/RawNamesBeforeSort
+    // This ensures that the JS sorted method and UI return the same order
+    it('Sort by various options returns the correct value', () => {
+
+        loginpage.login(configs.ValidUser, configs.Password)
+
+        // Calls the method, RawPrices and gets the variable, @RawPrices which is 'returned' by the method 
+        // It puts it into a new variable, RawPricesBeforeSort
+        // Then clicks on the sort option in the homepage
+        // Calls the method, RawPrices, again and gets the variable, @RawPrices which is 'returned' by the method 
+        // It puts it into a new variable, RawPricesAfterSort
+        // Finally compares if both RawPricesBeforeSort and RawPricesAfterSort are same 
+        // after sorting RawPricesBeforeSort from High to Low
+        checkoutpage.RawPrices()
+        cy.get('@RawPrices').then(RawPricesBeforeSort => {
+            cy.get(selectors.SortOption).select("Price (high to low)")
+            checkoutpage.RawPrices()
+            cy.get('@RawPrices').then(RawPricesAfterSort => { 
+                expect(JSON.stringify(RawPricesBeforeSort.sort(function(a,b) { return b - a;}))).to.eq(JSON.stringify(RawPricesAfterSort))            
+            })
+        })
+
+        // Compares if both RawPricesBeforeSort and RawPricesAfterSort are same 
+        // after sorting RawPricesBeforeSort from Low to High
+        checkoutpage.RawPrices()
+        cy.get('@RawPrices').then(RawPricesBeforeSort => {
+            cy.get(selectors.SortOption).select("Price (low to high)")
+            checkoutpage.RawPrices()
+            cy.get('@RawPrices').then(RawPricesAfterSort => { 
+                expect(JSON.stringify(RawPricesBeforeSort.sort(function(a,b) { return a - b;}))).to.eq(JSON.stringify(RawPricesAfterSort))            
+            })
+        })
+
+        // Compares if both RawNamesBeforeSort and RawNamesAfterSort are same 
+        // after sorting RawNamesBeforeSort from Name (A to Z)
+        checkoutpage.RawNames()
+        cy.get('@RawNames').then(RawNamesBeforeSort => {
+            cy.get(selectors.SortOption).select("Name (A to Z)")
+            checkoutpage.RawNames()
+            cy.get('@RawNames').then(RawNamesAfterSort => { 
+                expect(JSON.stringify(RawNamesBeforeSort.sort())).to.eq(JSON.stringify(RawNamesAfterSort))            
+            })
+        })
+
+        // Compares if both RawNamesBeforeSort and RawNamesAfterSort are same 
+        // after sorting RawNamesBeforeSort from Name (Z to A)
+        checkoutpage.RawNames()
+        cy.get('@RawNames').then(RawNamesBeforeSort => {
+            cy.get(selectors.SortOption).select("Name (Z to A)")
+            checkoutpage.RawNames()
+            cy.get('@RawNames').then(RawNamesAfterSort => { 
+                expect(JSON.stringify(RawNamesBeforeSort.reverse())).to.eq(JSON.stringify(RawNamesAfterSort))            
+            })
+        })
+    })
+    
 })
