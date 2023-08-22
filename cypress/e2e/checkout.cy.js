@@ -160,7 +160,7 @@ describe('Product Checkout', () => {
 
     // Adds a number of items to the cart, then gets the cart number into a variable, NumberBefore
     // Removes 1 item from the cart, then gets the cart number into a variable, NumberAfter
-    // Finally, subtracts 1 from NumberBefore and asserts if NumberBefore and NumberBefore are same
+    // Finally, asserts if NumberBefore is greater than NumberAfter
     it('Cart count bubble decreases when product is removed', () => {
 
         loginpage.login(configs.ValidUser, configs.Password)
@@ -184,7 +184,7 @@ describe('Product Checkout', () => {
 
     // Adds a number of items to the cart, then gets the cart number into a variable, NumberBefore
     // Adds 1 item from the cart, then gets the cart number into a variable, NumberAfter
-    // Finally, adds 1 from NumberBefore and asserts if NumberBefore and NumberBefore are same
+    // Finally, asserts if NumberBefore is less than NumberAfter
     it('Cart count bubble increases when product is added', () => {
 
         loginpage.login(configs.ValidUser, configs.Password)
