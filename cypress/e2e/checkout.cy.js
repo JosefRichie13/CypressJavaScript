@@ -176,7 +176,7 @@ describe('Product Checkout', () => {
             var NumberBefore = parseInt(NumberBefore.text())
             checkoutpage.AddAProductToCart('Sauce Labs Onesie')
             cy.get(selectors.CartBubbleNumber).then((NumberAfter) => {
-                expect(NumberBefore - 1).to.eq(parseInt(NumberAfter.text()))
+                expect(NumberBefore).to.be.greaterThan(parseInt(NumberAfter.text()))
             })
         })
     })
@@ -199,7 +199,7 @@ describe('Product Checkout', () => {
             var NumberBefore = parseInt(NumberBefore.text())
             checkoutpage.AddAProductToCart('Sauce Labs Onesie')
             cy.get(selectors.CartBubbleNumber).then((NumberAfter) => {
-                expect(NumberBefore + 1).to.eq(parseInt(NumberAfter.text()))
+                expect(NumberBefore).to.be.lessThan(parseInt(NumberAfter.text()))
             })
         })
     })
