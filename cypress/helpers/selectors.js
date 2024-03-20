@@ -27,6 +27,10 @@ class selectors {
     static SortOption = ".product_sort_container"
     static AddToCartNew = "button[data-test]"
     static CartBubbleNumber = ".shopping_cart_badge"
+    static Footer = ".footer"
+    static TwitterRedirect = ".social_twitter a"
+    static FacebookRedirect = ".social_facebook a"
+    static LinkedInRedirect = ".social_linkedin a"
 
 }
 

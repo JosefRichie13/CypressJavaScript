@@ -1,1 +1,1 @@
-{"bookingid":2578,"booking":{"firstname":"John","lastname":"Doe","totalprice":342,"depositpaid":true,"bookingdates":{"checkin":"2018-01-01","checkout":"2019-01-01"},"additionalneeds":"Breakfast"}}
+{"bookingid":198,"booking":{"firstname":"John","lastname":"Doe","totalprice":342,"depositpaid":true,"bookingdates":{"checkin":"2018-01-01","checkout":"2019-01-01"},"additionalneeds":"Breakfast"}}
